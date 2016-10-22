@@ -2,13 +2,14 @@
 
 var express = require('express');
 var multer = require('multer');
+var path = require('path');
 var PORT = process.env.PORT || 8000;
 
 var app = express();
 
 app.get('/', function (req, res) {
     console.log('Homepage hit...');
-    res.sendFile('./index.html');
+    res.sendFile(path.join(__dirname, './index.html'));
 });
 
 // Resume UPLOADS
