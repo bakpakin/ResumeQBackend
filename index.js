@@ -29,13 +29,13 @@ app.post('/resume_submit', function (req, res, next) {
 app.get('/resume/:id', function (req, res) {
     var id = req.params.id;
     console.log('Resume "' + id + '" requested.');
-    fs.stat(path.join(__dirname, './uploads/' + id), function(err, res) {
+    fs.stat(path.join(__dirname, './uploads/' + id), function(err, data) {
         if(err == null) {
             res.type('application/pdf');
             res.sendFile(path.join(__dirname, './uploads/' + id));
         } else if(err.code == 'ENOENT') {
             // file does not exist
-            res.status(404).json({
+            res.statusCode(404).json({
                 id: id,
                 success: false,
                 error: 'Could not find resume.'
