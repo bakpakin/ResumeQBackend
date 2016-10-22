@@ -28,6 +28,7 @@ app.post('/resume_submit', function (req, res, next) {
 
 app.get('/resume/:id', function (req, res) {
     var id = req.params.id;
+    id = id.replace(/\.[^/.]+$/, ""); // strip file extensions. Everything is a pdf.
     console.log('Resume "' + id + '" requested.');
     fs.stat(path.join(__dirname, './uploads/' + id), function(err, data) {
         if(err == null) {
