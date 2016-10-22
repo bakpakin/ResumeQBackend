@@ -12,6 +12,7 @@
   "dependencies": {
     "express": "^4.14.0",
     "multer": "^1.2.0",
-    "nedb": "^1.8.0"
+    "nedb": "^1.8.0",
+    "node-uuid": "^1.4.7"
   }
 }
