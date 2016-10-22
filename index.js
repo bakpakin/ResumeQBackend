@@ -10,9 +10,18 @@ var PORT = process.env.PORT || 8000;
 
 var app = express();
 
+app.use('/static', express.static(path.join(__dirname, 'static')));
+
+// Main page
 app.get('/', function (req, res) {
     console.log('Homepage hit...');
     res.sendFile(path.join(__dirname, './index.html'));
+});
+
+// Successful upload page
+app.get('/qrcode/:id', function (req, res) {
+    console.log('Qrcode page hit...');
+    res.sendFile(path.join(__dirname, './uploaded.html'));
 });
 
 // Resume UPLOADS
@@ -23,7 +32,7 @@ app.post('/resume_submit', function (req, res, next) {
     // Here the file has been uploaded.
     console.log(req.body); //form fields
     console.log(req.file); //form files
-	res.status(204).end();
+    res.redirect('/qrcode/' + req.file.filename);
 });
 
 app.get('/resume/:id', function (req, res) {
