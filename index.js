@@ -1,12 +1,13 @@
 'use strict';
 
 var express = require('express');
+var multer = require('multer');
 var PORT = process.env.PORT || 8000;
 
 var app = express();
 
 app.get('/', function (req, res) {
-    res.send('Hello, Heroku!');
+    res.sendFile('./index.html');
 });
 
 app.listen(PORT, function () {
