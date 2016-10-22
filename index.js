@@ -35,7 +35,7 @@ app.get('/resume/:id', function (req, res) {
             res.sendFile(path.join(__dirname, './uploads/' + id));
         } else if(err.code == 'ENOENT') {
             // file does not exist
-            res.statusCode(404).json({
+            res.status(404).json({
                 id: id,
                 success: false,
                 error: 'Could not find resume.'
