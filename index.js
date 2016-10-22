@@ -35,6 +35,11 @@ app.post('/resume_submit', function (req, res, next) {
     res.redirect('/qrcode/' + req.file.filename);
 });
 
+app.get('/resume/test.pdf', function (req, res) {
+    res.type('application/pdf');
+    res.sendFile(path.join(__dirname, './test.pdf'));
+});
+
 app.get('/resume/:id', function (req, res) {
     var id = req.params.id;
     id = id.replace(/\.[^/.]+$/, ""); // strip file extensions. Everything is a pdf.
