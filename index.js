@@ -28,7 +28,7 @@ app.post('/resume_submit', function (req, res, next) {
 app.get('/resume/:id', function (req, res) {
     var id = req.params.id;
     console.log('Resume "' + id + '" requested.');
-    res.send({
+    res.json({
         id: id,
         success: true,
         data: 'LOL'
