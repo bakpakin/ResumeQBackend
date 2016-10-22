@@ -15,13 +15,13 @@ app.use('/static', express.static(path.join(__dirname, 'static')));
 // Main page
 app.get('/', function (req, res) {
     console.log('Homepage hit...');
-    res.sendFile(path.join(__dirname, './index.html'));
+    res.sendFile(path.join(__dirname, './pages/index.html'));
 });
 
 // Successful upload page
 app.get('/qrcode/:id', function (req, res) {
     console.log('Qrcode page hit...');
-    res.sendFile(path.join(__dirname, './uploaded.html'));
+    res.sendFile(path.join(__dirname, './pages/uploaded.html'));
 });
 
 // Resume UPLOADS
