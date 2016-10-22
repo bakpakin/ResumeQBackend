@@ -31,7 +31,6 @@ app.get('/resume/:id', function (req, res) {
     console.log('Resume "' + id + '" requested.');
     fs.stat(path.join(__dirname, './uploads/' + id), function(err, res) {
         if(err == null) {
-            /* File exists */
             res.type('application/pdf');
             res.sendFile(path.join(__dirname, './uploads/' + id));
         } else if(err.code == 'ENOENT') {
