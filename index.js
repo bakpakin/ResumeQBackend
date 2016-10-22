@@ -3,8 +3,9 @@
 var express = require('express');
 var multer = require('multer');
 var uploads = multer({dest: 'uploads/'});
-var uuid = require ('node-uuid');
+var uuid = require('node-uuid');
 var path = require('path');
+var fs = require('fs');
 var PORT = process.env.PORT || 8000;
 
 var app = express();
@@ -28,10 +29,21 @@ app.post('/resume_submit', function (req, res, next) {
 app.get('/resume/:id', function (req, res) {
     var id = req.params.id;
     console.log('Resume "' + id + '" requested.');
-    res.json({
-        id: id,
-        success: true,
-        data: 'LOL'
+    fs.stat(path.join(__dirname, './uploads/' + id), function(err, res) {
+        if(err == null) {
+            /* File exists */
+            res.type('application/pdf');
+            res.sendFile(path.join(__dirname, './uploads/' + id));
+        } else if(err.code == 'ENOENT') {
+            // file does not exist
+            res.status(404).json({
+                id: id,
+                success: false,
+                error: 'Could not find resume.'
+            });
+        } else {
+            console.log('Some other error: ', err.code);
+        }
     });
 });
 
