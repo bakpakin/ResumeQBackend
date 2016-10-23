@@ -50,7 +50,12 @@ app.post('/resume_submit', function (req, res, next) {
 });
 
 // Resume UPLOADS easier
-app.post('/resume_submit_json', bodyParser.text(), function (req, res) {
+app.post('/resume_submit_json', function(req, res, next) {
+    req.pipe(concat(function(data) {
+        req.body = data;
+        next();
+    }));
+}, function (req, res) {
     console.log('Resume submission received...');
     console.log(req.body)
     var id = uuid.v4();
