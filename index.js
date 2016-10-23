@@ -22,7 +22,7 @@ db.loadDatabase();
 // })
 
 var app = express();
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
@@ -50,14 +50,17 @@ app.post('/resume_submit', function (req, res, next) {
 });
 
 // Resume UPLOADS easier
-app.post('/resume_submit_mobile', function (req, res, next) {
+app.post('/resume_submit_json', function (req, res) {
     console.log('Resume submission received...');
-    return next();
-}, uploads.single('resume'), function (req, res) {
-    // Here the file has been uploaded.
-    console.log(req.body); //form fields
-    console.log(req.file); //form files
-    res.send(req.file.filename)
+    var id = uuid.v4();
+    var buf = new Buffer(body, 'base64');
+    fs.writeFile('./uploads/' + id, buf, function(err) {
+        if (err) {
+            console.log(err);
+        }
+    });
+    console.log(id);
+    res.send(id);
 });
 
 app.get('/resume/test.pdf', function (req, res) {
