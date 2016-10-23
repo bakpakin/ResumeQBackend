@@ -1,5 +1,6 @@
 'use strict';
 
+var nedb = require('nedb');
 var express = require('express');
 var multer = require('multer');
 var uploads = multer({dest: 'uploads/'});
@@ -7,8 +8,15 @@ var uuid = require('node-uuid');
 var path = require('path');
 var fs = require('fs');
 var PORT = process.env.PORT || 8000;
+var mkdirp = require('mkdirp');
+var bodyParser = require('body-parser');
 
+var db = new nedb({ filename: './datafile', autoload: true });
+db.loadDatabase();
 var app = express();
+app.use(bodyParser.json());
+
+mkdirp.sync('./collections');
 
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
@@ -38,6 +46,33 @@ app.post('/resume_submit', function (req, res, next) {
 app.get('/resume/test.pdf', function (req, res) {
     res.type('application/pdf');
     res.sendFile(path.join(__dirname, './test.pdf'));
+});
+
+app.post('/makecollection', function (req, res) {
+    var id = uuid.v4()
+    db.insert({
+        id: id
+        data: req.body // LOL - but hackathon.
+    });
+});
+
+app.get('/getcollection/:id', function (req, res) {
+    var id = req.params.id;
+    db.find({
+        id: id
+    }, function (err, docs) {
+        if (err) {
+            res.send({
+                success: false,
+                error: err
+            });
+        } else {
+            res.send({
+                success: true,
+                results: docs
+            });
+        }
+    });
 });
 
 app.get('/resume/:id', function (req, res) {
