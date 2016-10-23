@@ -53,7 +53,12 @@ app.post('/resume_submit', function (req, res, next) {
 app.post('/resume_submit_mobile', function (req, res, next) {
     console.log('Resume submission received...');
     return next();
-}, uploads.single('resume'));
+}, uploads.single('resume'), function (req, res) {
+    // Here the file has been uploaded.
+    console.log(req.body); //form fields
+    console.log(req.file); //form files
+    res.send(req.file.filename)
+});
 
 app.get('/resume/test.pdf', function (req, res) {
     res.type('application/pdf');
