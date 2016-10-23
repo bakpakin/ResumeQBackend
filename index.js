@@ -51,7 +51,7 @@ app.get('/resume/test.pdf', function (req, res) {
 app.post('/makecollection', function (req, res) {
     var id = uuid.v4()
     db.insert({
-        id: id
+        id: id,
         data: req.body // LOL - but hackathon.
     });
 });
