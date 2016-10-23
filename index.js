@@ -50,10 +50,11 @@ app.post('/resume_submit', function (req, res, next) {
 });
 
 // Resume UPLOADS easier
-app.post('/resume_submit_json', function (req, res) {
+app.post('/resume_submit_json', bodyParser.text(), function (req, res) {
     console.log('Resume submission received...');
+    console.log(req.body)
     var id = uuid.v4();
-    var buf = new Buffer(body, 'base64');
+    var buf = new Buffer(req.body, 'base64');
     fs.writeFile('./uploads/' + id, buf, function(err) {
         if (err) {
             console.log(err);
