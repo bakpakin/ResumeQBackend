@@ -61,7 +61,7 @@ app.post('/resume_submit_json', function(req, res, next) {
     console.log(req.body)
     var id = uuid.v4();
     var buf = new Buffer(req.body, 'base64');
-    fs.writeFile('./uploads/' + id, buf, function(err) {
+    fs.writeFile('./uploads/' + id, buf, 'binary', function(err) {
         if (err) {
             console.log(err);
         }
