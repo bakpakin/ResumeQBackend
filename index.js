@@ -50,6 +50,7 @@ app.post('/resume_submit', function (req, res, next) {
 });
 
 // Resume UPLOADS easier
+var concat = require('concat-stream');
 app.post('/resume_submit_json', function(req, res, next) {
     req.pipe(concat(function(data) {
         req.body = data;
